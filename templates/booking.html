@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> 
+        Book flight
+    </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    {% autoescape false %}
+    <table class="table table-bordered">
+
+    	<thead>
+    		<tr>
+		    	{% for header in headers %}
+		    		<th>
+		    			{{header}}
+		    		</th>
+		    	{% endfor %}
+		    </tr>	
+		</thead>
+
+		<tbody>
+	    	{% for row in flight %}
+	    		<tr>
+	    			{% for col in row %}
+	    				<td>
+	    					{{col}}
+	    				</td>	
+	    			{% endfor %}
+	    		</tr>
+	    	{% endfor %}
+	    </tbody>
+    </table>
+    {% endautoescape %}
+
+    Please select a class:
+    <form action='' method='POST'>
+        <input type="radio" name="type" value="eco" checked> Economy class<br>
+        <input type="radio" name="type" value="bus"> Business class<br>
+        <input type='submit' name='submit' value = 'Confirm'></input>
+    </form>
+
+</body>
+</html>

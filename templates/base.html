@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <title>{% block title %}{% endblock %}</title>
+
+        <style>
+            div.container {
+                width: 100%;
+                border: 1px solid gray;
+                height: 1200px;
+            }
+
+            header, footer {
+                padding: 1em;
+                color: white;
+                background-color: blue;
+                clear: left;
+                text-align: center;
+            }
+
+            ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                background-color: #333;
+            }
+
+            li {
+                float: left;
+            }
+
+            li a {
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+            a:hover:not(.active) {
+                background-color: #111;
+            }
+
+            .active {
+            background-color:darkblue;
+            }
+
+            content {
+                margin-left: 170px;
+                border-left: 1px solid gray;
+                padding: 1em;
+                overflow: hidden;
+            }
+        </style>
+  </head>
+
+
+  <body>
+    <div class="container">
+        <header>
+           <h1>SWIFT ARS</h1>
+           <h3>Let's fly...</h3>
+        </header>
+
+        {% block content %}{% endblock %}
+
+    </div>
+  </body>
+
+
+</html>

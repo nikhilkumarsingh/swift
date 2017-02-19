@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}My Bookings{% endblock %}
+
+
+{% block content %}
+
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/flights">Flights</a></li>
+        <li><a class="active" href="/profile">Profile</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+
+    {% autoescape false %}
+    <div class="upcoming">
+        <h2>Upcoming flights:</h2>
+        <table class="table table-bordered">
+
+            <thead>
+                <tr>
+                    {% for header in headers %}
+                        <th>
+                            {{header}}
+                        </th>
+                    {% endfor %}
+                </tr>   
+            </thead>
+
+            <tbody>
+                {% for row in bookings[1] %}
+                    <tr>
+                        {% for col in row %}
+                            <td>
+                                {{col}}
+                            </td>   
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="passed">
+
+        <h2>Passed flights:</h2>
+        <table class="table table-bordered">
+
+            <thead>
+                <tr>
+                    {% for header in headers %}
+                        <th>
+                            {{header}}
+                        </th>
+                    {% endfor %}
+                </tr>   
+            </thead>
+
+            <tbody>
+                {% for row in bookings[0] %}
+                    <tr>
+                        {% for col in row %}
+                            <td>
+                                {{col}}
+                            </td>   
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endautoescape %}
+
+{% endblock %}

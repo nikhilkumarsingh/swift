@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+
+{% block content %}
+    {% if valid_user %}
+        <ul>
+            <li><a class = "active" href="/">Home</a></li>
+            <li><a href="/flights">Flights</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    {% else %}
+        <ul>
+            <li><a class = "active" href="/">Home</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/signup">Sign Up</a></li>
+        </ul>
+    {% endif %}
+
+    Welcome to ARS!
+{% endblock %}

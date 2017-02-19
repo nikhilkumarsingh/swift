@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Info{% endblock %}
+
+
+{% block content %}
+
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/flights">Flights</a></li>
+        <li><a href="/profile">Profile</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+    
+    {% autoescape false %}
+		{{msg}}
+	{% endautoescape %}
+	<br/>
+	<a href = "/flights"> Check out more flights!</a><br/>
+	<a href = "/profile"> Check out your profile!</a><br/>
+	<a href = "/"> Home page </a>
+{% endblock %}
