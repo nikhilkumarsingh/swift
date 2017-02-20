@@ -19,7 +19,6 @@ app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 # initialize login manager
 login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
-users = fetch_valid_users()
 
 class User(flask_login.UserMixin):
     pass
@@ -27,6 +26,7 @@ class User(flask_login.UserMixin):
 
 @login_manager.user_loader
 def user_loader(email):
+    users = fetch_valid_users()
     if email not in users:
         return 
     user = User()
@@ -37,6 +37,7 @@ def user_loader(email):
 
 @login_manager.request_loader
 def request_loader(request):
+    users = fetch_valid_users()
     email = request.form.get('email')
     if email not in users:
         return None
@@ -51,7 +52,7 @@ def request_loader(request):
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    global users
+    
     
     if flask.request.method == 'GET':
         msg = flask.request.args.get('msg')
@@ -64,6 +65,8 @@ def signup():
         name = flask.request.form['name']
         email = flask.request.form['email']
         pw = flask.request.form['pw']
+
+        users = fetch_valid_users()
 
         if name != '' and email != '' and pw != '' and email not in users:
             register_user(name, email, pw)
@@ -89,6 +92,8 @@ def login():
             return flask.render_template('login.html', error = error)
 
     email = flask.request.form['email']
+
+    users = fetch_valid_users()
 
     if email not in users:
         return flask.render_template('login.html', error = "User does not exist!")
@@ -252,6 +257,7 @@ atexit.register(lambda: scheduler.shutdown())
 
 
 if __name__ == '__main__':
+    update_flights()
     app.run(debug = True, port = 5050)
 
 
