@@ -84,6 +84,7 @@ create table booking (
 );
 
 
+
 insert into company (name) values('Indian airlines');
 insert into company (name) values('Jet airways');
 

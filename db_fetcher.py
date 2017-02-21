@@ -68,7 +68,6 @@ def init_db():
 
 
 def register_user(name, email, pw):
-    # creating a new connection for new thread
     conn = sqlite3.connect('airlines.db')
     c = conn.cursor()
 
@@ -78,9 +77,7 @@ def register_user(name, email, pw):
     
     
 
-def update_flights():
-    print "Flights updated!"
-    # creating a new connection for new thread
+def update_flights():    
     conn = sqlite3.connect('airlines.db')
     c = conn.cursor()
     
@@ -130,6 +127,7 @@ def update_flights():
 def fetch_valid_users():
     conn = sqlite3.connect('airlines.db')
     c = conn.cursor()
+    
     c.execute("select email, pw_hash, name from passenger")
     rows = c.fetchall()
     users = {}
@@ -141,6 +139,7 @@ def fetch_valid_users():
 def fetch_locations():
     conn = sqlite3.connect('airlines.db')
     c = conn.cursor()
+    
     c.execute("select l_id, name from location")
     data = c.fetchall()
     locations = [{'id':x[0], 'name':x[1]} for x in data]
@@ -150,6 +149,7 @@ def fetch_locations():
 def fetch_companies():
     conn = sqlite3.connect('airlines.db')
     c = conn.cursor()
+    
     c.execute("select c_id, name from company")
     data = c.fetchall()
     companies = [{'id':x[0], 'name':x[1]} for x in data]
@@ -284,7 +284,6 @@ def fetch_flights(from_id, to_id, dept_date, company_id, flight_id = None):
         
         table.append(new_row)
     
-
     return table
 
 
@@ -304,6 +303,7 @@ def commit_booking(f_id, email, btime, flight_type, price):
 
     c.execute("insert into booking (f_id, p_id, b_time, flight_type, price) values(?,?,?,?,?)", (f_id, p_id, btime, flight_type, price))
     conn.commit()
+
 
 
 def booking_template(bookings, cancellation):
@@ -346,15 +346,19 @@ def fetch_bookings(email):
 
     bookings = []
 
+    # bookings of passed flights
     c.execute("select b_id, booking.f_id, p_id, b_time, flight_type, price from booking, old_flight where p_id = ? and booking.f_id = old_flight.f_id", (p_id,))
     bookings.append(c.fetchall())
 
+    # bookings of current flights
     c.execute("select b_id, booking.f_id, p_id, b_time, flight_type, price from booking, flight where p_id = ? and booking.f_id = flight.f_id", (p_id,))
     bookings.append(c.fetchall())
-
+    
+    # no bookings found
     if len(bookings[0] + bookings[1]) == 0:
         return None
-        
+
+    # sort bookings according to booking time    
     bookings[0].sort(key = lambda x: datetime.strptime(x[3],"%Y-%m-%d %H:%M:%S.%f"), reverse = True)    
     bookings[1].sort(key = lambda x: datetime.strptime(x[3],"%Y-%m-%d %H:%M:%S.%f"), reverse = True)    
 
@@ -410,5 +414,6 @@ if not os.path.isfile('airlines.db'):
 else:
     conn = sqlite3.connect('airlines.db')
     c = conn.cursor()
+    update_flights()
 
     

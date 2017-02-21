@@ -12,9 +12,8 @@ app = flask.Flask(__name__)
 app.config.from_object(__name__)
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 
-#logging.basicConfig()
 
-#------------------------ LOGIN FUNCIONALITY ----------------------------------#
+#-------------------- LOGIN FUNCIONALITY ---------------------#
 
 # initialize login manager
 login_manager = flask_login.LoginManager()
@@ -120,13 +119,22 @@ def unauthorized_handler():
 
 #------------------------------------------------------------------------------#
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def home_page():
     valid_user = False
     username = 'Guest'
     if flask_login.current_user.get_id() != None:
         valid_user = True
     return flask.render_template('index.html', valid_user = valid_user)
+
+
+@app.route('/about', methods=['GET'])
+def about_page():
+    valid_user = False
+    username = 'Guest'
+    if flask_login.current_user.get_id() != None:
+        valid_user = True
+    return flask.render_template('about.html', valid_user = valid_user)
 
 
 @app.route('/flights', methods=['GET', 'POST'])
@@ -142,9 +150,9 @@ def journey_planner():
     
     if flask.request.method == 'GET':
         defaults = ['none', 'none', 'Date', 'none']
-        return flask.render_template('flights.html', locations_1 = locations_1, locations_2 = locations_2,
-                                     defaults = defaults, dates = dates, companies = companies,
-                                     rows = None)
+        return flask.render_template('flights.html', locations_1 = locations_1,
+                                     locations_2 = locations_2, defaults = defaults,
+                                     dates = dates, companies = companies, rows = None)
 
     if flask.request.method == 'POST':
         orig_id = flask.request.form['orig']
@@ -162,30 +170,34 @@ def journey_planner():
         defaults = [orig_id, dest_id, dept_date, company_id]
 
         
-        headers = ["Flight ID", "Route", "Company", "Departure", "Arrival", "Economy class<br/>Booked/Capacity", "Economy fare",
+        headers = ["Flight ID", "Route", "Company", "Departure", "Arrival",
+                   "Economy class<br/>Booked/Capacity", "Economy fare",
                    "Business class<br/>Booked/Capacity", "Business fare"]
         
         rows = fetch_flights(orig_id, dest_id, dept_date, company_id)
         
-        return flask.render_template('flights.html', locations_1 = locations_1, locations_2 = locations_2,
-                                     defaults = defaults, dates = dates, companies = companies, headers = headers,
+        return flask.render_template('flights.html', locations_1 = locations_1,
+                                     locations_2 = locations_2,defaults = defaults,
+                                     dates = dates, companies = companies, headers = headers,
                                      rows = rows)
 
 
-        
+      
 @app.route('/flight/<int:flight_id>/', methods=['GET', 'POST'])
 @flask_login.login_required
 def flight_info(flight_id):
 
-    headers = ["Flight ID", "Route", "Company", "Departure", "Arrival", "Economy class<br/>Booked/Capacity", "Economy fare",
-                "Business class<br/>Booked/Capacity", "Business fare", "Status"]
+    headers = ["Flight ID", "Route", "Company", "Departure", "Arrival",
+               "Economy class<br/>Booked/Capacity", "Economy fare",
+               "Business class<br/>Booked/Capacity", "Business fare", "Status"]
 
     flight = fetch_flights(None, None, None, None, flight_id)
 
     if flask.request.method == 'GET':
-        return flask.render_template('flight_info.html', headers = headers, flight = flight)
+        return flask.render_template('flight_info.html', headers = headers,
+                                     flight = flight)
 
-    else:
+    if flask.request.method == 'POST':
         flight_type = flask.request.form['type']
         email = flask_login.current_user.id
         btime = datetime.now()
@@ -201,7 +213,9 @@ def flight_info(flight_id):
         return flask.render_template("information.html", msg = msg)
 
 
-@app.route('/cancel/<int:booking_id>/', methods=['GET', 'POST'])
+
+
+@app.route('/cancel/<int:booking_id>/', methods=['GET'])
 @flask_login.login_required
 def cancel_flight(booking_id):
 
@@ -220,25 +234,23 @@ def cancel_flight(booking_id):
     
 
     
-@app.route('/profile', methods=['GET', 'POST'])
+@app.route('/profile', methods=['GET'])
 @flask_login.login_required
 def user_profile():
     
-    headers = ["Booking ID", "Flight ID", "Booking time", "Flight type", "Fare", "Cancel"]
+    headers = ["Booking ID", "Flight ID", "Booking time",
+               "Flight type", "Fare", "Cancel"]
 
     email = flask_login.current_user.id
     bookings = fetch_bookings(email)
 
-    return flask.render_template("profile.html", bookings = bookings, headers = headers)
+    return flask.render_template("profile.html", bookings = bookings,
+                                 headers = headers)
     
 
     
-    
-    
-    
-
-
-############################################################
+#--------------------- Update flights data -------------------#
+#logging.basicConfig()
 scheduler = BackgroundScheduler()
 scheduler.start()
 
@@ -251,15 +263,8 @@ scheduler.add_job(
     )
 
 atexit.register(lambda: scheduler.shutdown())
-#############################################################
-
-
+#-------------------------------------------------------------#
 
 
 if __name__ == '__main__':
-    update_flights()
     app.run(debug = True, port = 5050)
-
-
-
-

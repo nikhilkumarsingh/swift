@@ -7,9 +7,11 @@
 
     <ul>
         <li><a href="/">Home</a></li>
-        <li><a class = "active" href="/flights">Flights</a></li>
+        <li><a class="active" href="/flights">Flights</a></li>
         <li><a href="/profile">Profile</a></li>
-        <li><a href="/logout">Logout</a></li>
+        <li><a href="/about">About</a></li>
+        <li id="right"><a href="/logout">Logout</a></li>
+        <li id="right"><a href="#"><strong>Welcome {{current_user.name}}!</strong></a></li>
     </ul>
 
 	<form action='flights' method='POST'>
