@@ -414,6 +414,5 @@ if not os.path.isfile('airlines.db'):
 else:
     conn = sqlite3.connect('airlines.db')
     c = conn.cursor()
-    update_flights()
 
     
