@@ -62,13 +62,13 @@ def fill_flights():
 
 def init_db():
     # create db from pre-defined schema
-    with open('/home/swiftars/swift/schema.sql', 'r') as f:
+    with open('./schema.sql', 'r') as f:
         c.executescript(f.read())
     conn.commit()
 
 
 def register_user(name, email, pw):
-    conn = sqlite3.connect('/home/swiftars/swift/airlines.db')
+    conn = sqlite3.connect('./airlines.db')
     c = conn.cursor()
 
     # insert user in passenger table
@@ -78,7 +78,7 @@ def register_user(name, email, pw):
 
 
 def update_flights():
-    conn = sqlite3.connect('/home/swiftars/swift/airlines.db')
+    conn = sqlite3.connect('./airlines.db')
     c = conn.cursor()
 
     # fetch all current flights
@@ -125,7 +125,7 @@ def update_flights():
 
 
 def fetch_valid_users():
-    conn = sqlite3.connect('/home/swiftars/swift/airlines.db')
+    conn = sqlite3.connect('./airlines.db')
     c = conn.cursor()
 
     c.execute("select email, pw_hash, name from passenger")
@@ -137,7 +137,7 @@ def fetch_valid_users():
 
 
 def fetch_locations():
-    conn = sqlite3.connect('/home/swiftars/swift/airlines.db')
+    conn = sqlite3.connect('./airlines.db')
     c = conn.cursor()
 
     c.execute("select l_id, name from location")
@@ -147,7 +147,7 @@ def fetch_locations():
 
 
 def fetch_companies():
-    conn = sqlite3.connect('/home/swiftars/swift/airlines.db')
+    conn = sqlite3.connect('./airlines.db')
     c = conn.cursor()
 
     c.execute("select c_id, name from company")
@@ -157,7 +157,7 @@ def fetch_companies():
 
 
 def fetch_routes_data(route_id = None):
-    conn = sqlite3.connect('/home/swiftars/swift/airlines.db')
+    conn = sqlite3.connect('./airlines.db')
     c = conn.cursor()
 
     c.execute("select * from location")
@@ -179,7 +179,7 @@ def fetch_routes_data(route_id = None):
 
 
 def fetch_companies_data(company_id = None):
-    conn = sqlite3.connect('/home/swiftars/swift/airlines.db')
+    conn = sqlite3.connect('./airlines.db')
     c = conn.cursor()
 
     if company_id == None:
@@ -196,7 +196,7 @@ def fetch_companies_data(company_id = None):
 
 
 def fetch_flights(from_id, to_id, dept_date, company_id, flight_id = None):
-    conn = sqlite3.connect('/home/swiftars/swift/airlines.db')
+    conn = sqlite3.connect('./airlines.db')
     c = conn.cursor()
 
     if flight_id != None:
@@ -289,7 +289,7 @@ def fetch_flights(from_id, to_id, dept_date, company_id, flight_id = None):
 
 
 def commit_booking(f_id, email, btime, flight_type, price):
-    conn = sqlite3.connect('/home/swiftars/swift/airlines.db')
+    conn = sqlite3.connect('./airlines.db')
     c = conn.cursor()
 
     if flight_type == 'eco':
@@ -338,7 +338,7 @@ def booking_template(bookings, cancellation):
 
 
 def fetch_bookings(email):
-    conn = sqlite3.connect('/home/swiftars/swift/airlines.db')
+    conn = sqlite3.connect('./airlines.db')
     c = conn.cursor()
 
     c.execute("select p_id from passenger where email = ?", (email,))
@@ -369,7 +369,7 @@ def fetch_bookings(email):
 
 
 def cancel_booking(email, b_id):
-    conn = sqlite3.connect('/home/swiftars/swift/airlines.db')
+    conn = sqlite3.connect('./airlines.db')
     c = conn.cursor()
 
     c.execute("select p_id from passenger where email = ?", (email,))
@@ -404,15 +404,15 @@ def cancel_booking(email, b_id):
 
 
 
-if not os.path.isfile('/home/swiftars/swift/airlines.db'):
-    conn = sqlite3.connect('/home/swiftars/swift/airlines.db')
+if not os.path.isfile('./airlines.db'):
+    conn = sqlite3.connect('./airlines.db')
     c = conn.cursor()
     init_db()
     fill_routes()
     fill_flights()
     update_flights()
 else:
-    conn = sqlite3.connect('/home/swiftars/swift/airlines.db')
+    conn = sqlite3.connect('./airlines.db')
     c = conn.cursor()
 
 
