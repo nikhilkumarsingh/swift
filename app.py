@@ -27,7 +27,7 @@ class User(flask_login.UserMixin):
 def user_loader(email):
     users = fetch_valid_users()
     if email not in users:
-        return 
+        return
     user = User()
     user.id = email
     user.name = users[email]['name']
@@ -51,8 +51,8 @@ def request_loader(request):
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    
-    
+
+
     if flask.request.method == 'GET':
         msg = flask.request.args.get('msg')
         if flask_login.current_user.get_id() != None:
@@ -75,15 +75,15 @@ def signup():
         else:
             msg = "Registration failed"
             return flask.redirect(flask.url_for('signup', msg = msg))
-            
-    
 
-        
+
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 
     error = flask.request.args.get('msg')
-    
+
     if flask.request.method == 'GET':
         if flask_login.current_user.get_id() != None:
             return flask.redirect(flask.url_for('home_page'))
@@ -97,7 +97,7 @@ def login():
     if email not in users:
         return flask.render_template('login.html', error = "User does not exist!")
 
-    
+
     if flask.request.form['pw'] != users[email]['pw']:
         return flask.render_template('login.html', error = "Wrong password!")
 
@@ -122,7 +122,6 @@ def unauthorized_handler():
 @app.route('/', methods=['GET'])
 def home_page():
     valid_user = False
-    username = 'Guest'
     if flask_login.current_user.get_id() != None:
         valid_user = True
     return flask.render_template('index.html', valid_user = valid_user)
@@ -131,7 +130,6 @@ def home_page():
 @app.route('/about', methods=['GET'])
 def about_page():
     valid_user = False
-    username = 'Guest'
     if flask_login.current_user.get_id() != None:
         valid_user = True
     return flask.render_template('about.html', valid_user = valid_user)
@@ -143,11 +141,11 @@ def journey_planner():
 
     locations_1 = [{'id':'none', 'name':'From'}] + fetch_locations()
     locations_2 = [{'id':'none', 'name':'To'}] + locations_1[1:]
-    
+
     dates = ['Date'] + [str((datetime.now() + timedelta(hours = 24*i)).date()) for i in range(3)]
 
     companies = [{'id':'none', 'name':'Company'}] + fetch_companies()
-    
+
     if flask.request.method == 'GET':
         defaults = ['none', 'none', 'Date', 'none']
         return flask.render_template('flights.html', locations_1 = locations_1,
@@ -166,23 +164,23 @@ def journey_planner():
             dest_id = int(dest_id)
         if company_id != 'none':
             company_id = int(company_id)
-            
+
         defaults = [orig_id, dest_id, dept_date, company_id]
 
-        
+
         headers = ["Flight ID", "Route", "Company", "Departure", "Arrival",
                    "Economy class<br/>Booked/Capacity", "Economy fare",
                    "Business class<br/>Booked/Capacity", "Business fare"]
-        
+
         rows = fetch_flights(orig_id, dest_id, dept_date, company_id)
-        
+
         return flask.render_template('flights.html', locations_1 = locations_1,
                                      locations_2 = locations_2,defaults = defaults,
                                      dates = dates, companies = companies, headers = headers,
                                      rows = rows)
 
 
-      
+
 @app.route('/flight/<int:flight_id>/', methods=['GET', 'POST'])
 @flask_login.login_required
 def flight_info(flight_id):
@@ -209,7 +207,7 @@ def flight_info(flight_id):
         commit_booking(flight_id, email, btime, flight_type, price)
 
         msg = "Success!<br/>Booking confirmed!"
-        
+
         return flask.render_template("information.html", msg = msg)
 
 
@@ -231,13 +229,13 @@ def cancel_flight(booking_id):
 
     return flask.render_template("information.html", msg = msg)
 
-    
 
-    
+
+
 @app.route('/profile', methods=['GET'])
 @flask_login.login_required
 def user_profile():
-    
+
     headers = ["Booking ID", "Flight ID", "Booking time",
                "Flight type", "Fare", "Cancel"]
 
@@ -246,9 +244,9 @@ def user_profile():
 
     return flask.render_template("profile.html", bookings = bookings,
                                  headers = headers)
-    
 
-    
+
+
 #--------------------- Update flights data -------------------#
 #logging.basicConfig()
 scheduler = BackgroundScheduler()
@@ -267,4 +265,4 @@ atexit.register(lambda: scheduler.shutdown())
 
 
 if __name__ == '__main__':
-    app.run(debug = True, port = 5050)
+    app.run()
