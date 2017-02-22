@@ -4,13 +4,13 @@
 
 {% block content %}
 
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/flights">Flights</a></li>
-        <li><a href="/profile">Profile</a></li>
-        <li><a href="/about">About</a></li>
-        <li id="right"><a href="/logout">Logout</a></li>
-        <li id="right"><a href="#"><strong>Welcome {{current_user.name}}!</strong></a></li>
+    <ul id="navul">
+        <li><a id="navli" href="/">Home</a></li>
+        <li><a id="navli" href="/flights">Flights</a></li>
+        <li><a id="navli" href="/profile">Profile</a></li>
+        <li><a id="navli" href="/about">About</a></li>
+        <li><a id="navli_right" href="/logout">Logout</a></li>
+        <li><a id="navli_right" href="#"><strong>Welcome {{current_user.name}}!</strong></a></li>
     </ul>
 
     {% autoescape false %}

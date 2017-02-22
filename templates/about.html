@@ -4,23 +4,52 @@
 
 {% block content %}
     {% if valid_user %}
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/flights">Flights</a></li>
-            <li><a href="/profile">Profile</a></li>
-            <li><a class = "active" href="/about">About</a></li>
-            <li id="right"><a href="/logout">Logout</a></li>
-            <li id="right"><a href="#"><strong>Welcome {{current_user.name}}!</strong></a></li>
+        <ul id="navul">
+            <li><a id="navli" href="/">Home</a></li>
+            <li><a id="navli" href="/flights">Flights</a></li>
+            <li><a id="navli" href="/profile">Profile</a></li>
+            <li><a id="navli" class = "active" href="/about">About</a></li>
+            <li><a id="navli_right" href="/logout">Logout</a></li>
+            <li><a id="navli_right" href="#"><strong>Welcome {{current_user.name}}!</strong></a></li>
         </ul>
     {% else %}
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a class = "active" href="/about">About</a></li>
-            <li id="right"><a href="/login">Login</a></li>
-            <li id="right"><a href="/signup">Sign Up</a></li>
+        <ul id="navul">
+            <li><a id="navli" href="/">Home</a></li>
+            <li><a id="navli" class = "active" href="/about">About</a></li>
+            <li><a id="navli_right" href="/login">Login</a></li>
+            <li><a id="navli_right" href="/signup">Sign Up</a></li>
         </ul>
     {% endif %}
 
-
-About this project.
+<h1><a id="About_this_project_0"></a>About this project</h1>
+<p><strong>“SWIFT ARS (AIRLINE RESERVATION SYSTEM)”</strong> is a DBMS project aimed at simulating an airline reservation system.</p>
+<ul>
+<li><h2>Stack:</h2>
+<ul>
+<li>SQLite (RDBMS)</li>
+<li>Flask (Web Framework in Python)</li>
+<li>HTML, CSS, Bootstrap (Front-end)</li>
+<li>APscheduler (Advanced scheduler in python for simulating flights)</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><h2>Features:</h2>
+<ul>
+<li><strong>Sign Up</strong> and <strong>Login</strong> functionality.</li>
+<li>Automatic flight <strong>simulation</strong>.</li>
+<li>Flight filtering on basis of <strong>origin</strong>, <strong>destination</strong>, <strong>date</strong> and <strong>company</strong>.</li>
+<li>Profile section for user to check booked <strong>upcoming</strong> and <strong>passed</strong> flights.</li>
+<li>Booking <strong>cancellation</strong>.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><h2>Team:</h2>
+<ul>
+<li><strong>Nikhil Kumar Singh</strong><br>
+Implemented SQL queries, backend and basic frontend templates.</li>
+<li><strong>Nivesh Kumar Singh</strong><br>
+Designed the ER model and basic SQL queries.</li>
+</ul>
 {% endblock %}

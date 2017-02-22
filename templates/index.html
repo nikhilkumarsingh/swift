@@ -4,22 +4,22 @@
 
 {% block content %}
     {% if valid_user %}
-        <ul>
-            <li><a class = "active" href="/">Home</a></li>
-            <li><a href="/flights">Flights</a></li>
-            <li><a href="/profile">Profile</a></li>
-            <li><a href="/about">About</a></li>
-            <li id="right"><a href="/logout">Logout</a></li>
-            <li id="right"><a href="#"><strong>Welcome {{current_user.name}}!</strong></a></li>
+        <ul  id="navul">
+            <li><a id="navli" class = "active" href="/">Home</a></li>
+            <li><a id="navli" href="/flights">Flights</a></li>
+            <li><a id="navli" href="/profile">Profile</a></li>
+            <li><a id="navli" href="/about">About</a></li>
+            <li><a id="navli_right" href="/logout">Logout</a></li>
+            <li><a id="navli_right" href="#"><strong>Welcome {{current_user.name}}!</strong></a></li>
         </ul>
     {% else %}
-        <ul>
-            <li><a class = "active" href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li id="right"><a href="/login">Login</a></li>
-            <li id="right"><a href="/signup">Sign Up</a></li>
+        <ul id="navul">
+            <li><a id="navli" class = "active" href="/">Home</a></li>
+            <li><a id="navli" href="/about">About</a></li>
+            <li><a id="navli_right" href="/login">Login</a></li>
+            <li><a id="navli_right" href="/signup">Sign Up</a></li>
         </ul>
     {% endif %}
 
-    Welcome to ARS!
+    <h2><strong>Welcome to Swift ARS!</strong></h2>
 {% endblock %}

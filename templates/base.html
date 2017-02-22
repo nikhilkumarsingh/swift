@@ -18,12 +18,12 @@
             header, footer {
                 padding: 1em;
                 color: white;
-                background-color: blue;
+                background-color: none;
                 clear: left;
                 text-align: center;
             }
 
-            ul {
+            #navul {
                 list-style-type: none;
                 margin: 0;
                 padding: 0;
@@ -31,15 +31,15 @@
                 background-color: #333;
             }
 
-            li {
+            #navli {
                 float: left;
             }
 
-            #right {
+            #navli_right {
                 float: right;
             }
 
-            li a {
+            #navli, #navli_right {
                 display: block;
                 color: white;
                 text-align: center;
@@ -63,9 +63,6 @@
             color:white;
             }
 
-            #hey {
-                
-            }
             content {
                 margin-left: 170px;
                 border-left: 1px solid gray;
@@ -76,12 +73,13 @@
   </head>
 
 
-  <body>
+  <body style="background-image:url(../../static/sky2.jpg);background-repeat: no-repeat;background-attachment: fixed;">
     <div class="container">
         <header>
-           <h1>SWIFT ARS</h1>
-           <h3>Let's fly...</h3>
+           <h1 style="color:#9c14e5; font-size: 350%; font-family:"Gill Sans Extrabold", Helvetica, sans-serif;"><strong><i>SWIFT ARS</i></strong></h1>
+           <h3 style="color:grey"><i>Let's fly...</i></h3>
         </header>
+        
 
         {% block content %}{% endblock %}
 
